@@ -51,17 +51,91 @@ class BinarySearchTree {
   /** insertRecursively(val): insert a new node into the BST with value val.
    * Returns the tree. Uses recursion. */
 
-  insertRecursively(val) {}
+  insertRecursively(val) {
+    function recursiveInsertHelper(node, newNode) {
+      if (newNode.val < node.val) {
+        if (node.left === null) {
+          node.left = newNode
+          return
+        } else {
+          recursiveInsertHelper(node.left, newNode)
+        }
+      } else {
+        if (node.right === null) {
+          node.right = newNode
+          return
+        } else {
+          recursiveInsertHelper(node.right, newNode)
+        }
+      }
+    }
+
+    const newNode = new Node(val)
+
+    if (this.root === null) {
+      this.root = newNode
+    } else {
+      recursiveInsertHelper(this.root, newNode)
+    }
+    return this
+  }
 
   /** find(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses iteration. */
+  find(val) {
+    if (this.root === null) {
+      return undefined
+    }
 
-  find(val) {}
+    let stack = []
+    let current = this.root
+
+    while (current || stack.length > 0) {
+      while (current) {
+        stack.push(current)
+        current = current.left
+      }
+
+      current = stack.pop()
+
+      if (val === current.val) {
+        return current
+      }
+
+      current = current.right
+    }
+
+    return undefined
+  }
 
   /** findRecursively(val): search the tree for a node with value val.
    * return the node, if found; else undefined. Uses recursion. */
 
-  findRecursively(val) {}
+  findRecursively(val) {
+    function findRecursivelyHelper(node, val) {
+      if (node === null || val === node.val) return node
+
+      if (val < node.val) {
+        if (node.left) {
+          return findRecursivelyHelper(node.left, val)
+        } else {
+          return undefined
+        }
+      } else {
+        if (node.right) {
+          return findRecursivelyHelper(node.right, val)
+        } else {
+          return undefined
+        }
+      }
+    }
+    // check if the first node in tree exists
+    if (this.root === null) {
+      return undefined
+    }
+
+    return findRecursivelyHelper(this.root, val)
+  }
 
   /** dfsPreOrder(): Traverse the array using pre-order DFS.
    * Return an array of visited nodes. */
