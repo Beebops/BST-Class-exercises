@@ -140,22 +140,92 @@ class BinarySearchTree {
   /** dfsPreOrder(): Traverse the array using pre-order DFS.
    * Return an array of visited nodes. */
 
-  dfsPreOrder() {}
+  dfsPreOrder() {
+    const values = []
+    let current = this.root
+    // define a function called traverse that takes in a node
+    function traverse(node) {
+      // push the value of the node into the array
+      values.push(node.val)
+      // go left as long as long as there is a left node
+      if (node.left) {
+        traverse(node.left)
+      }
+      // go right as long as there is a right node
+      if (node.right) {
+        traverse(node.right)
+      }
+    }
+    // traverse starting at the current node
+    traverse(current)
+    return values
+  }
 
   /** dfsInOrder(): Traverse the array using in-order DFS.
    * Return an array of visited nodes. */
 
-  dfsInOrder() {}
+  dfsInOrder() {
+    // first visit the left subtree
+    // then visit the current node
+    // then visit the right subtree
+    const values = []
+    let current = this.root
+    function traverse(node) {
+      if (node.left) {
+        traverse(node.left)
+      }
+
+      values.push(node.val)
+
+      if (node.right) {
+        traverse(node.right)
+      }
+    }
+    traverse(current)
+    return values
+  }
 
   /** dfsPostOrder(): Traverse the array using post-order DFS.
    * Return an array of visited nodes. */
 
-  dfsPostOrder() {}
+  dfsPostOrder() {
+    const values = []
+    let current = this.root
+
+    function traverse(node) {
+      if (node.left) {
+        traverse(node.left)
+      }
+      if (node.right) {
+        traverse(node.right)
+      }
+      values.push(node.val)
+    }
+    traverse(current)
+    return values
+  }
 
   /** bfs(): Traverse the array using BFS.
    * Return an array of visited nodes. */
 
-  bfs() {}
+  bfs() {
+    let node = this.root
+    let queue = [node]
+    let values = []
+
+    while (queue.length) {
+      node = queue.shift()
+      values.push(node.val)
+      if (node.left) {
+        queue.push(node.left)
+      }
+      if (node.right) {
+        queue.push(node.right)
+      }
+    }
+
+    return values
+  }
 
   /** Further Study!
    * remove(val): Removes a node in the BST with the value val.
